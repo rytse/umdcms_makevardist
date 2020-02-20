@@ -1,0 +1,3 @@
+[submodule "WG_Analysis"]
+	path = WG_Analysis
+	url = https://github.com/albertobelloni/WG_Analysis.git
