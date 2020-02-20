@@ -2,8 +2,12 @@
 
 debug = 0
 from Load_SOB import *
-outputDir = '/data2/users/jabeen/DATA_2/SB-All'
-resultsdir = '/data2/users/jabeen/DATA_2/SB-All'
+
+#outputDir = '/data2/users/jabeen/DATA_2/SB-All'
+#resultsdir = '/data2/users/jabeen/DATA_2/SB-All'
+outputDir = 'data'
+resultsdir = 'data'
+
 parser = ArgumentParser()
 parser.add_argument('--baseDirMuG',      default=None,           dest='baseDirMuG',         required=False, help='Path to muon base directory')
 #stitparser.add_argument('--baseDirElG',      default=None,           dest='baseDirElG',         required=False, help='Path to electron base directory')
@@ -127,12 +131,12 @@ def main() :
     # ========steps for finding optimal cuts ================ 
 
 #STEP 1 -  apply cuts and save final yields for all background and signal samples
-    getyields = 0
+    getyields = 1
 #STEP 2  get numbers from above saved log files, make tables and calculate significanse. Finally make SOB plots for every signal sample 
     makesob = 1
 
 #STEP 3 get the cut strings from tables saved in the above step and plot variables corresponding to those cuts
-    drawvars = 0
+    drawvars = 1
 
 
     if (getyields):
@@ -149,6 +153,7 @@ def main() :
     
         for j in range(len(signal_name)):
             makesob_plots(0,  sigstr_BCuts, sampManElG,resultsdir,vararray, signal_name[j], selarray, hist_config,{}, "" )# first param 0 to use already existing table rather than running reading from all the log files again
+#            makesob_plots(1,  sigstr_BCuts, sampManElG,resultsdir,vararray, signal_name[j], selarray, hist_config,{}, "" )# first param 0 to use already existing table rather than running reading from all the log files again
 
     n = 0
     if(drawvars):
