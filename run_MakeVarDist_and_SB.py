@@ -6,7 +6,8 @@ outputDir = '/data2/users/jabeen/DATA_2/SB-All'
 resultsdir = '/data2/users/jabeen/DATA_2/SB-All'
 parser = ArgumentParser()
 parser.add_argument('--baseDirMuG',      default=None,           dest='baseDirMuG',         required=False, help='Path to muon base directory')
-stitparser.add_argument('--baseDirElG',      default=None,           dest='baseDirElG',         required=False, help='Path to electron base directory')
+#stitparser.add_argument('--baseDirElG',      default=None,           dest='baseDirElG',         required=False, help='Path to electron base directory')
+parser.add_argument('--baseDirElG',      default=None,           dest='baseDirElG',         required=False, help='Path to electron base directory')
 parser.add_argument('--outputDir',       default=None,           dest='outputDir',          required=False, help='Output directory to write histograms')
 parser.add_argument('--data',            default=False,          dest='data',               required=False, help='Use data or MC')
 parser.add_argument('--batch',           default=None,          dest='batch',              required=False, help='Supress X11 output')
