@@ -16,10 +16,12 @@ options = parser.parse_args()
 
 _TREENAME = 'UMDNTuple/EventTree'
 _FILENAME = 'tree.root'
-_XSFILE   = 'cross_sections/photon17.py'
+#_XSFILE   = 'cross_sections/photon17.py'
+_XSFILE   = 'WG_Analysis/Plotting/cross_sections/photon17.py'
 _LUMI     = 36000
 #_BASEPATH = '/home/jkunkle/usercode/Plotting/LimitSetting/'
-_SAMPCONF = 'Modules/Resonance2017.py'
+#_SAMPCONF = 'Modules/Resonance2017.py'
+_SAMPCONF = 'WG_Analysis/Plotting/Modules/Resonance2017.py'
 #_SAMPCONF = 'Modules/Resonance.py'
 
 
