@@ -9,6 +9,8 @@ import subprocess
 #import pandas as pd
 import math
 
+# Import modules from ROOT. 
+
 import ROOT,os, re, string, csv, math, sys
 from ROOT import TCanvas, TFile, TProfile, TNtuple, TH1F, TH1D, TH2F,TF1, TGaxis, TPad, TPaveLabel, TPaveText, TLegend, TLatex, THStack, TLine, TMath, TGraph, TGraphErrors, TMultiGraph, TStyle, TLeaf
 from ROOT import gROOT, gBenchmark, gRandom, gSystem, Double, gPad, gStyle
@@ -36,6 +38,9 @@ debug = 0
      #ph_passMedium[0]
      #&&el_pt[0]>40
 ## with bad tracker portions excluded
+
+# Set cuts for event processing. 
+
 selbase_el_excludephi = 'ph_n>=1&&el_n==1&&!( ph_eta[0]<0&&ph_phi[0]>2.3&&ph_phi[0]<2.7)&&!(ph_phi[0]>1.2&&ph_phi[0]<1.5)'
 selbase_mu = 'mu_pt30_n==1&& mu_n==1'
     #selbase_el = 'ph_n>=1&&el_n==1'
@@ -197,6 +202,8 @@ def makeplots(dostack, samples,vararray, dirname, selprearray=None, hist_config=
             if (dostack): 
                 samples.SaveStack(savename, dirname, 'base')
            
+# If event passes the cuts, add its name to the selection array.
+
 def makeselection(sel):
     #print 'in make selection sel =' 
     if(debug):
@@ -213,16 +220,26 @@ def makeselection(sel):
     #print name
     return sel, name
 
+# Calculates significance.
 
 def signif(samples,vararray, signal,  dirname, selprearray=None, hist_config=None, legend_config=None, extratag = ""):
     #print "in signf ==========================="
     #print selprearray
     chlist ="[]{}()"
     data = {}
+   
+    # Total background.
     total_b  = []
+   
+    # Total background error.
     total_b_err  = []
+   
+    # Total significance.
     total_s  = []
+   
+    # Total significance error. 
     total_s_err  = []
+   
     #total_s_list  = [[] for i in range(len(sigstr))]
     sig_cut_for_plots = []
     xname = [] # cutname to appear on x axis
@@ -304,6 +321,10 @@ def signif(samples,vararray, signal,  dirname, selprearray=None, hist_config=Non
             f.close()
     #print '%20s  %15s  = %5s      Backgd=  %5s' %( name,   sigstr[i],  str(round(y_sig[i],2)),str( round(total_b[0],2))  )        
     #for n in range(len(sigstr)):
+      
+    # If the directory does not exist, the operating system
+    # will automatically generate it.
+      
     seldir = dirname + "/Selected"
     if not os.path.exists(seldir):
         os.makedirs(seldir)
@@ -322,6 +343,7 @@ def signif(samples,vararray, signal,  dirname, selprearray=None, hist_config=Non
     f.close()
     return xname, total_b, total_b_err, total_s, total_s_err, sig_cut_for_plots
    
+# Make standard significance over background plots.
 
 def makesob_plots(calcsig, sigstr_BCuts, samples,  dirname,  vararray, signal,selarray=None, hist_config=None, legend_config=None, extratag = "" ):
     c1 = TCanvas( 'c1', 'Significanse', 200, 10, 1500, 700 )
@@ -361,6 +383,9 @@ def makesob_plots(calcsig, sigstr_BCuts, samples,  dirname,  vararray, signal,se
                 #print line
                 if n > 1:
                     #print listline[5]
+                     
+                     # Add background and significance to their respective
+                     # arrays for the plot generation.
                     xname_all.append(str(listline[0])) 
                     bkg_all.append(float(listline[1]))  
                     bkg_err_all.append(float(listline[2]))  
@@ -641,6 +666,7 @@ def makesob_plots(calcsig, sigstr_BCuts, samples,  dirname,  vararray, signal,se
         f.close()
     print "Total number of cut combinations used for plotting: " + str(len(xname_all))
     
+# Make plots of the log files in the selected folder.
 
 def make_selected_plots(sigstr_BCuts, samples,  dirname,  vararray, signal,selarray=None, hist_config=None, legend_config=None, extratag = "" ):
     seldir = dirname + "/Selected/"
@@ -715,6 +741,8 @@ def ratioline(hratio):
     oneline.SetLineColor(ROOT.kBlack)
     oneline.Draw()
     return oneline
+
+# Formatting for histograms.
 
 def hformat(h1,color):
     h1.SetLineColor(color)
