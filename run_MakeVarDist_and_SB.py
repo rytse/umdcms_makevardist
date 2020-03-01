@@ -143,6 +143,11 @@ def main() :
     
     # c) Uncomment lines 114-119. This will replace the extensive signal name list with a much 
     #    shorter version, for the purpose of debugging. 
+    
+    # d) Run the ./run_MakeVarDist_and_SB.py --batch BATCH command to make the log files.
+
+    # e) Reset getyields and makesob in main to 0 and 1, respectively. This will generate the plots 
+    #    based on the recently created log files. 
 
     #STEP 1 -  apply cuts and save final yields for all background and signal samples
     getyields = 1
