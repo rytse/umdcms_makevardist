@@ -5,7 +5,14 @@ from Load_SOB import *
 
 #outputDir = '/data2/users/jabeen/DATA_2/SB-All'
 #resultsdir = '/data2/users/jabeen/DATA_2/SB-All'
+
+# The DATA-2/SB-All/Selected/ will be generated automatically
+# when running the source file.
+
+# Change output directory (outputDir) to '/data/users/{username}/Data-2/SB-All'.
 outputDir = 'data'
+
+# Change results directory (resultsDir) to '/data/users/{username}/Data-2/SB-All'.
 resultsdir = 'data'
 
 parser = ArgumentParser()
@@ -77,11 +84,7 @@ signal_name = ["MadGraphResonanceMass200_width0p01"
                ,"MadGraphResonanceMass3500_width5"
                ,"MadGraphResonanceMass4000_width5"]
 
-
-
-
 #sigstr = ["MadGraphResonanceMass250_width5", "MadGraphResonanceMass1000_width0p01", "MadGraphResonanceMass2200_width0p01"]
-
 
 def main() :
     if options.outputDir: f1 = ROOT.TFile("%s/output.root"%(options.outputDir),"RECREATE")
@@ -92,6 +95,7 @@ def main() :
     #sampManMuG.ReadSamples( _SAMPCONF )
     sampManElG.ReadSamples( _SAMPCONF )
     
+    # Set values for cuts.
     cut_phpt = [(phpt70,"phpt70"), (phpt80,"phpt80"), (phpt90,"phpt90"), (phpt100,"phpt100"), (phpt105,"phpt105"), (phpt110,"phpt110"),  (phpt120,"phpt120"), (phpt130,"phpt130"),  (phpt140,"phpt140"),  (phpt150,"phpt150"),  (phpt160,"phpt160"),  (phpt170,"phpt170"),  (phpt180,"phpt180"),  (phpt190,"phpt190"),  (phpt200,"phpt200"),  (phpt210,"phpt210"),  (phpt220,"phpt220"),  (phpt230,"phpt230"),  (phpt240,"phpt240"),  (phpt250,"phpt250")]
     
     cut_elid = [(elidTight,"elidTight"), (elidMedium,"elidMedium"), (elidLoose,"elidLoose")]
@@ -103,7 +107,7 @@ def main() :
     cut_elpt = [(elpt30,"elpt30"), (elpt40,"elpt40"), (elpt50,"elpt50"), (elpt60,"elpt60"), (elpt70,"elpt70"),  (elpt80,"elpt80"),  (elpt90,"elpt90"), (elpt100,"elpt100"), (elpt110,"elpt110"), (elpt120,"elpt120"), (elpt130,"elpt130"), (elpt140,"elpt140"), (elpt150,"elpt150"), (elpt160,"elpt160")]
     
     #el_pt0_selbase_el_gtmet30_phpt60_elpt160_elidLoose_phidLoose_invZ20_.pdf.log
-
+    
     #Uncomment these instead for debugging selbase_el_gtmet25_phpt80_elpt40_elidTight_phidTight_invZ10
     #cut_met = [(gtmet30,"gtmet30")]
     #cut_elpt = [(elpt160,"elpt160")]
@@ -130,8 +134,19 @@ def main() :
    
     # ========steps for finding optimal cuts ================ 
 
-#STEP 1 -  apply cuts and save final yields for all background and signal samples
+# Do the following steps when first running the file:
+    # a) Set getyields to 1. This will apply the initial cuts and save all relevant background 
+    #    and signal numbers into log files.
+    
+    # b) Set makesob to 0. It is necessary to create the relevant log files to be able to make
+    #    the plots.
+    
+    # c) Uncomment lines 114-119. This will replace the extensive signal name list with a much 
+    #    shorter version, for the purpose of debugging. 
+
+    #STEP 1 -  apply cuts and save final yields for all background and signal samples
     getyields = 1
+    
 #STEP 2  get numbers from above saved log files, make tables and calculate significanse. Finally make SOB plots for every signal sample 
     makesob = 1
 
@@ -142,7 +157,7 @@ def main() :
     if (getyields):
         vararray = [ ("el_pt[0]",    (50,0,200),     "p_{T}(e, leading)")] 
     
-        makeplots(0, sampManElG,vararray, resultsdir, selarray, hist_config, {}, "")
+        makeplots(0, sampManElG, vararray, resultsdir, selarray, hist_config, {}, "")
         # first 0 means dont save the plots as we just need logfiles
                 #legend_config = {'legendLoc':"Double","legendTranslateX":0.3}
                 #hist_config = {"blind":True, "weight": "PUWeight*NLOWeight"}
