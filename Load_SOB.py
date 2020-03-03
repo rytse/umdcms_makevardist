@@ -173,6 +173,7 @@ def makeplots(dostack, samples,vararray, dirname, selprearray=None, hist_config=
     if selprearray is None or not isinstance(selprearray,(tuple,list)):
         return
     else:
+        # Make array a single tuple/product. ach 
         selarray = product(*selprearray)
     
     if(debug):
@@ -198,11 +199,14 @@ def makeplots(dostack, samples,vararray, dirname, selprearray=None, hist_config=
                 legend_config = {'legendLoc':"TopLeft","legendTranslateX":0.95,"legendTranslateY":0.0}
             nl = nl +1
             samples.Draw(var[0], selection, var[1], hist_config, legend_config)
+            
+            # Prints out number of events for every signal and background 
+            # sample (i.e., all combinations of signals and backgrounds). ach
             samples.print_stack_count()
             if (dostack): 
                 samples.SaveStack(savename, dirname, 'base')
            
-# If event passes the cuts, add its name to the selection array.
+# Python manipulation. Adds && to selection array. ach
 
 def makeselection(sel):
     #print 'in make selection sel =' 
@@ -234,13 +238,15 @@ def signif(samples,vararray, signal,  dirname, selprearray=None, hist_config=Non
     # Total background error.
     total_b_err  = []
    
-    # Total significance.
+    # Total signal.
     total_s  = []
    
-    # Total significance error. 
+    # Total signal error. 
     total_s_err  = []
    
     #total_s_list  = [[] for i in range(len(sigstr))]
+      
+    # Significance cut for plots (i.e., the primary cut array)
     sig_cut_for_plots = []
     xname = [] # cutname to appear on x axis
                     
@@ -343,7 +349,7 @@ def signif(samples,vararray, signal,  dirname, selprearray=None, hist_config=Non
     f.close()
     return xname, total_b, total_b_err, total_s, total_s_err, sig_cut_for_plots
    
-# Make standard significance over background plots.
+# Make signal over background plots.
 
 def makesob_plots(calcsig, sigstr_BCuts, samples,  dirname,  vararray, signal,selarray=None, hist_config=None, legend_config=None, extratag = "" ):
     c1 = TCanvas( 'c1', 'Significanse', 200, 10, 1500, 700 )
@@ -369,6 +375,8 @@ def makesob_plots(calcsig, sigstr_BCuts, samples,  dirname,  vararray, signal,se
     sig_cut_plots = [] 
     
     #xname, ysig, signame = signif(sampManElG,vararray, selarray, hist_config,{}, "log")
+      
+    # If calcsig != 0 ach
     if (calcsig):
         xname_all, bkg_all, bkg_err_all, sig_all, sig_err_all,  sig_cut_plots  = signif(samples,vararray, signal, dirname, selarray, hist_config,{}, "")
     else:
