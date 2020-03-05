@@ -1,9 +1,39 @@
 #!/usr/bin/env python
+
+"""
+======== Steps for finding optimal cuts ================
+
+Do the following steps when first running the file:
+
+a) Set `GET_YIELDS` to 1. This will apply the initial cuts and save all relevant background
+   and signal numbers into log files.
+
+b) Set `MAKE_SOB` to 0. It is necessary to create the relevant log files to be able to make
+   the plots.
+
+c) Ensure that `RUN_SUBSET = True`. This will replace the extensive signal name list with a much
+   shorter version, for the purpose of debugging.
+
+d) Run the `./run_MakeVarDist_and_SB.py --batch BATCH` command to make the log files.
+
+e) Reset `GET_YIELDS` and `MAKE_SOB` in main to 0 and 1, respectively. This will generate the plots
+   based on the recently created log files.
+"""
+
 import os
 import pwd
 from Load_SOB import *
 
 debug = 0
+RUN_SUBSET = True   # set True to only run on a very small portion of cut space
+
+# STEP 1 -  apply cuts and save final yields for all background and signal samples
+GET_YIELDS = 1
+# STEP 2  get numbers from above saved log files, make tables and calculate significance. Finally make SOB plots for
+# every signal sample
+MAKE_SOB = 1
+# STEP 3 get the cut strings from tables saved in the above step and plot variables corresponding to those cuts
+DRAW_VARS = 1
 
 # outputDir = '/data2/users/jabeen/DATA_2/SB-All'
 # resultsdir = '/data2/users/jabeen/DATA_2/SB-All'
@@ -140,19 +170,15 @@ def main():
     # el_pt0_selbase_el_gtmet30_phpt60_elpt160_elidLoose_phidLoose_invZ20_.pdf.log
 
     # Uncomment these instead for debugging selbase_el_gtmet25_phpt80_elpt40_elidTight_phidTight_invZ10
-
     # Reset signal names for debugging purposes. ach
-
-    # signal_name = [
-    #           "MadGraphResonanceMass500_width5"
-    #           ,"MadGraphResonanceMass1000_width0p01"]
-
-    # cut_met = [(gtmet30,"gtmet30")]
-    # cut_elpt = [(elpt160,"elpt160")]
-    # cut_phpt = [(phpt60,"phpt60")]
-    # cut_elid = [(elidLoose,"elidLoose")]
-    # cut_phid = [(phidLoose,"phidLoose")]
-    # cut_z = [ (invZ20, "invZ20")]
+    if RUN_SUBSET:
+        signal_name = ["MadGraphResonanceMass500_width5", "MadGraphResonanceMass1000_width0p01"]
+        cut_met = [(gtmet30,"gtmet30")]
+        cut_elpt = [(elpt160,"elpt160")]
+        cut_phpt = [(phpt60,"phpt60")]
+        cut_elid = [(elidLoose,"elidLoose")]
+        cut_phid = [(phidLoose,"phidLoose")]
+        cut_z = [ (invZ20, "invZ20")]
 
     selarray = [[(selbase_el, "selbase_el"), ], cut_met, cut_phpt, cut_elpt, cut_elid, cut_phid, cut_z]
     # variables to be plotted
@@ -169,55 +195,21 @@ def main():
     #    legend_config = {'legendLoc':"Double","legendTranslateX":0.3}
     hist_config = {"logy": 1, "blind": True, "weight": "PUWeight*NLOWeight"}
 
-    # ========steps for finding optimal cuts ================ 
-
-    # Do the following steps when first running the file:
-    # a) Set getyields to 1. This will apply the initial cuts and save all relevant background 
-    #    and signal numbers into log files.
-
-    # b) Set makesob to 0. It is necessary to create the relevant log files to be able to make
-    #    the plots.
-
-    # c) Uncomment lines 114-119. This will replace the extensive signal name list with a much 
-    #    shorter version, for the purpose of debugging. 
-
-    # d) Run the ./run_MakeVarDist_and_SB.py --batch BATCH command to make the log files.
-
-    # e) Reset getyields and makesob in main to 0 and 1, respectively. This will generate the plots 
-    #    based on the recently created log files. 
-
-    # STEP 1 -  apply cuts and save final yields for all background and signal samples
-    getyields = 1
-
-    # STEP 2  get numbers from above saved log files, make tables and calculate significance. Finally make SOB plots for
-    # every signal sample
-    makesob = 1
-
-    # STEP 3 get the cut strings from tables saved in the above step and plot variables corresponding to those cuts
-    drawvars = 1
-
-    if getyields:
+    if GET_YIELDS:
         vararray = [("el_pt[0]", (50, 0, 200), "p_{T}(e, leading)")]
-
         makeplots(0, sampManElG, vararray, resultsdir, selarray, hist_config, {}, "")
-        # first 0 means dont save the plots as we just need logfiles
         # legend_config = {'legendLoc':"Double","legendTranslateX":0.3}
         # hist_config = {"blind":True, "weight": "PUWeight*NLOWeight"}
         # makeplots(vararray, selarray, hist_config, legend_config)
 
-    if makesob:
+    if MAKE_SOB:
         vararray = [("el_pt[0]", (50, 0, 200), "p_{T}(e, leading)")]
-
         for j in range(len(signal_name)):  # plot SOB for each signal of interest
             makesob_plots(0, sigstr_BCuts, sampManElG, resultsdir, vararray, signal_name[j], selarray, hist_config, {},
                           "")
-            # first param 0 to use already existing table rather than running reading from all the log files again
-            # makesob_plots(1,  sigstr_BCuts, sampManElG,resultsdir,vararray, signal_name[j], selarray, hist_config,{},
-            # "" )
 
     n = 0
-    if drawvars:
-
+    if DRAW_VARS:
         for j in range(len(signal_name)):
             if n == 0:
                 legend_config = {'legendLoc': "Double", "legendTranslateX": 0.3}
