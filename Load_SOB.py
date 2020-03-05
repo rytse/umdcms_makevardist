@@ -40,7 +40,7 @@ debug = 0
 # &&el_passTight[0]
 # ph_passMedium[0]
 # &&el_pt[0]>40
-## with bad tracker portions excluded
+# with bad tracker portions excluded
 
 # Set cuts for event processing. 
 
@@ -186,12 +186,12 @@ def makeplots(dostack, samples, vararray, dirname, selprearray=None, hist_config
         # Make array a single tuple/product. ach 
         selarray = product(*selprearray)
 
-    if (debug):
+    if debug:
         print str(selarray)
     for sel in selarray:  # iterate over every possible set of cuts
         # print "sel in sellarray" + str(sel)
         selection, name = makeselection(sel)  # format cut string
-        if (debug):
+        if debug:
             print "selectionl = " + str(selection)
         # print  "name = " + str(name)
         # print str(selection)
@@ -206,7 +206,7 @@ def makeplots(dostack, samples, vararray, dirname, selprearray=None, hist_config
             # Configure plot options
             hist_config["xlabel"] = var[2]
             # print var[0], selection, savename
-            if (nl == 0):
+            if nl == 0:
                 legend_config = {'legendLoc': "Double", "legendTranslateX": 0.3}
             else:
                 legend_config = {'legendLoc': "TopLeft", "legendTranslateX": 0.95, "legendTranslateY": 0.0}
@@ -218,7 +218,7 @@ def makeplots(dostack, samples, vararray, dirname, selprearray=None, hist_config
             # Prints out number of events for every signal and background 
             # sample (i.e., all combinations of signals and backgrounds). ach
             samples.print_stack_count()
-            if (dostack):  # plot hist
+            if dostack:  # plot hist
                 samples.SaveStack(savename, dirname, 'base')
 
 
@@ -241,7 +241,7 @@ def makeselection(sel):
     :return: (<list of cut ranges>, <list of cut variable names>) formatted the way `SampleManager` expects selections
     """
     # print 'in make selection sel ='
-    if (debug):
+    if debug:
         print sel
     sel, name = zip(*sel)
     # print "sel =" + str(sel)
@@ -331,7 +331,7 @@ def signif(samples, vararray, signal, dirname, selprearray=None, hist_config=Non
 
             # Load the logfile corresponding to the specified cut and variable of interest and dump the values of
             # interest into table files
-            if (os.path.isfile(dirname + '/' + savename + '.log') and (x)):
+            if os.path.isfile(dirname + '/' + savename + '.log') and x:
                 # f_table = dirname + '/' + savename + "_table"
                 f_table = dirname + "/" + signal + savename + "_table"
                 sigrep = "Make " + signal + " hist"  # string representing the signal file
@@ -350,7 +350,7 @@ def signif(samples, vararray, signal, dirname, selprearray=None, hist_config=Non
                         os.system(command)
 
                         # grep to dump signal values into the table
-                        if (lookfor[i] == sigrep):
+                        if lookfor[i] == sigrep:
                             command = "grep \"" + sigrep + "\" " + str(dirname + '/' + savename + '.log  >> ') + str(
                                 f_table)
                             # print command
@@ -470,7 +470,7 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
 
     # If calcsig != 0 ach
     # If recalculating from scratch, call signif to count background and signal events
-    if (calcsig):
+    if calcsig:
         xname_all, bkg_all, bkg_err_all, sig_all, sig_err_all, sig_cut_plots = signif(samples, vararray, signal,
                                                                                       dirname, selarray, hist_config,
                                                                                       {}, "")
@@ -543,13 +543,13 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
         signif_cut = sig_all[i] / math.sqrt(bkg_all[i]) # compute variance assuming
         # print sigstr_BaseCuts
         # print "cut i : " + str(xname_all[i])
-        if (xname_all[i] == sigstr_BaseCuts):   # if the cut is a base cut, print
+        if xname_all[i] == sigstr_BaseCuts:   # if the cut is a base cut, print
             print "Base cut for this signal is : " + xname_all[i]
             # print  " ith bin in xname_all[i]  " + str(i)
             basecut_listvalue = i
             # if (debug):
             print "i   " + str(i) + "  " + xname_all[i] + "    " + str(signif_cut)
-        if (signif_cut > (1.015 * signif_max)): # append significant events to list of relevant counts
+        if signif_cut > (1.015 * signif_max): # append significant events to list of relevant counts
             print "i   " + str(i) + "  " + xname_all[i] + "    " + str(signif_cut)
             signif_max = signif_cut
             # if (debug):
@@ -561,23 +561,21 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
             xname.append(xname_all[i])
             sig_cut_for_plots.append(sig_cut_plots[i])
             # signame.append(signame_all[i+1])
-    if (debug):
+    if debug:
         print sig_all[1]
-    if (debug):
         print sig[1]
+        print "How many cuts ?   " + str(len(xname[0]))
 
     # n= int(len(xname))
     # nsig= int(len(signame))
     nhist = ["_sig", "_bkg", "_bkgsqrt", "_sob", "_sosqrtb"]
-    if (debug):
-        print "How many cuts ?   " + str(len(xname[0]))
-    '''
-    Bin# 0 contains the underflow.
-    Bin# 1 contains the first bin with low-edge ( xlow INCLUDED).
-    The second to last bin (bin# nbins) contains the upper-edge (xup EXCLUDED).
-    The Last bin (bin# nbins+1) contains the overflow.
-    '''
-    ############Make the SOB plot for ALL cuts
+
+    # Bin 0 contains the underflow
+    # Bin 1 contains the first bin with low-edge ( xlow INCLUDED).
+    # The second to last bin (bin# nbins) contains the upper-edge (xup EXCLUDED).
+    # The Last bin (bin# nbins+1) contains the overflow.
+
+    # Make the SOB plot for ALL cuts
     histName_All = signal + "_h_SOB_ALL"
     nall = int(len(xname_all))
     histNameAll = ROOT.TH1F(histName_All, "", nall + 1, 0, nall + 1)
@@ -596,7 +594,7 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
 
     #################################################
     # for i in range(len(signame)):
-    if (debug):
+    if debug:
         print "Histogram " + signal
     n = int(len(xname))
     for j in range(len(nhist)):
@@ -607,7 +605,7 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
         # if (debug):
         # print"histogram name is = " + histall[j].GetName()
     # for j in range(len(signame)):# loop on signal samples
-    if (debug):
+    if debug:
         print signal
     n = int(len(xname))
     bscut = basecut_listvalue
@@ -616,15 +614,13 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
         for i in range(len(xname)):  # loop on cuts sets
             if (debug):
                 print "signal  and cut set  " + str(j) + "  " + str(i)
-            if (debug):
                 print xname[i] + "has significance" + str(ysig[i])  # first index is signal sample, second index is cut
-            # sig = round(float(ysig[i]),2)
-            if (debug):
                 print str(i) + "   sig[i]   " + str(sig[i])
+                print nhist[k]
+            # sig = round(float(ysig[i]),2)
             # if (debug):
             # print histall[k].GetName()
-            if (debug):
-                print nhist[k]
+
             histall[k].GetXaxis().SetBinLabel(i + 1, xname[i])
             # print "bscut  =" + str(bscut)
             # print "length of xname_all[j] arra  =" + str(len(xname_all))
@@ -634,7 +630,7 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
 
             # print sig_cut_plots[i]
             # print "base cut value = " + str(bscut) + str(sig_all[j][bscut])
-            if (nhist[k] == '_sig'):
+            if nhist[k] == '_sig':
                 histall[k].SetBinContent(i + 1, sig[i])
                 histall[k].SetBinError(i + 1, sig_err[i])  #
                 histall[k].SetBinContent(n + 1, sig_all[bscut])
@@ -644,14 +640,14 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
                 # print "n+1 bin label = " + histall[j][k].GetXaxis().GetBinLabel(n+1)
                 # if (debug):
                 # print "n+1 bin content " + str(histall[k].GetBinContent(n+1))
-            if (nhist[k] == '_bkg'):
+            if nhist[k] == '_bkg':
                 histall[k].SetBinContent(i + 1, bkg[i])
                 histall[k].SetBinError(i + 1, bkg_err[i])  #
                 histall[k].SetBinContent(n + 1, bkg_all[bscut])
                 histall[k].SetBinError(n + 1, bkg_err_all[bscut])  #
                 if (debug):
                     print histall[k].GetBinContent(i + 1)
-            if (nhist[k] == '_bkgsqrt'):
+            if nhist[k] == '_bkgsqrt':
                 percenterr = (bkg_err[i] / bkg[i]) / 2
                 berr = percenterr * math.sqrt(bkg[i])
                 berr_bscut = ((bkg_err_all[bscut] / bkg_all[bscut]) / 2) * math.sqrt(bkg_all[bscut])
@@ -659,29 +655,28 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
                 histall[k].SetBinError(i + 1, berr)  #
                 histall[k].SetBinContent(n + 1, math.sqrt(bkg_all[bscut]))
                 histall[k].SetBinError(n + 1, berr_bscut)  #
-                if (debug):
+                if debug:
                     print histall[k].GetBinContent(i + 1)
-                if (debug):
                     print Sigh.GetXaxis().GetBinLabel(i + 1)
 
     gStyle.SetOptStat(0);
     # for j in range(len(signame)):
     for k in range(len(nhist)):
-        if (nhist[k] == "_sob"):
+        if nhist[k] == "_sob":
             histall[k] = doratio(histall[0], histall[1])
             histall[k].GetYaxis().SetTitle('S/B')
-            if (debug):
+            if debug:
                 print "sob" + str(histall[k].GetBinContent(1))
-        if (nhist[k] == "_sosqrtb"):
+        if nhist[k] == "_sosqrtb":
             histall[k] = doratio(histall[0], histall[2])
             histall[k].GetYaxis().SetTitle('S/#\sqrt B')
-        if (nhist[k] == "_sig"):
+        if nhist[k] == "_sig":
             histall[k].GetYaxis().SetTitle('Signal')
-        if (nhist[k] == "_bkg"):
+        if nhist[k] == "_bkg":
             histall[k].GetYaxis().SetTitle('Total Background')
-
-        if (nhist[k] == "_bkgsqrt"):
+        if nhist[k] == "_bkgsqrt":
             histall[k].GetYaxis().SetTitle('Sqrt Total Background')
+
         histall[k].SetLineColor(k + 2)
         histall[k].SetLineWidth(4)
         # histall[k].GetXaxis().LabelsOption("v")
@@ -693,7 +688,7 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
         histall[k].GetYaxis().SetLabelSize(0.04)
         histall[k].GetYaxis().CenterTitle()
         histall[k].GetYaxis().SetNdivisions(510, True)
-        if (debug):
+        if debug:
             print histall[k].GetXaxis().GetBinLabel(i + 1)
 
     maxy = 0.0
@@ -746,20 +741,20 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
         # p1.Update();
         l = ROOT.TLine(c1.GetUxmin(), BC, c1.GetUxmax(), BC)
 
-        l.SetLineColor(4);
-        l.SetLineWidth(2);
-        l.Draw();
+        l.SetLineColor(4)
+        l.SetLineWidth(2)
+        l.Draw()
 
         latex = TLatex()
         latex.SetNDC()
         latex.SetTextSize(0.04)
         latex.SetTextAlign(12)  # 12 center, 31align right
-        latex.DrawLatex(0.2, 0.85, signal);
-        latex.DrawLatex(0.2, 0.75, 'Max Cut ' + maxcut);
-        latex.DrawLatex(0.2, 0.65, 'Base Value = ' + str(BC) + ' Max Value  ' + str(maxvalue));
+        latex.DrawLatex(0.2, 0.85, signal)
+        latex.DrawLatex(0.2, 0.75, 'Max Cut ' + maxcut)
+        latex.DrawLatex(0.2, 0.65, 'Base Value = ' + str(BC) + ' Max Value  ' + str(maxvalue))
         latex.SetTextAlign(31)  # align right
-        latex.DrawLatex(0.25, 0.93, " 36 fb^{-1} at #sqrt{s} = 13 TeV");
-        latex.DrawLatex(0.8, 0.93, "CMS Internal");
+        latex.DrawLatex(0.25, 0.93, " 36 fb^{-1} at #sqrt{s} = 13 TeV")
+        latex.DrawLatex(0.8, 0.93, "CMS Internal")
 
         # legend.SetShadowColor(0);
         # legend.SetFillColor(0);

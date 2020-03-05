@@ -17,7 +17,8 @@ resultsdir = 'data'
 
 parser = ArgumentParser()
 parser.add_argument('--baseDirMuG', default=None, dest='baseDirMuG', required=False, help='Path to muon base directory')
-# stitparser.add_argument('--baseDirElG',      default=None,           dest='baseDirElG',         required=False, help='Path to electron base directory')
+# stitparser.add_argument('--baseDirElG', default=None, dest='baseDirElG', required=False,
+# help='Path to electron base directory')
 parser.add_argument('--baseDirElG', default=None, dest='baseDirElG', required=False,
                     help='Path to electron base directory')
 parser.add_argument('--outputDir', default=None, dest='outputDir', required=False,
@@ -60,7 +61,9 @@ if options.baseDirMuG is None: options.baseDirMuG = "/data2/users/kakw/Resonance
 if options.baseDirElG is None: options.baseDirElG = "/data2/users/kakw/Resonances2017/LepGamma_elg_2019_10_28/"
 # options.baseDirElG = "/data/users/friccita/WGammaNtuple/LepGamma_elg_2019_04_11/"
 # =========Provide the string for base cuts to compare the sigbificanse against in the final SOB plots
-# sigstr_BCuts = ["selbase_el_gtmet25_phpt80_elpt40_elidTight_phidTight_invZ10", "selbase_el_gtmet25_phpt80_elpt40_elidTight_phidTight_invZ10", "selbase_el_gtmet25_phpt80_elpt40_elidTight_phidTight_invZ10"]
+# sigstr_BCuts = ["selbase_el_gtmet25_phpt80_elpt40_elidTight_phidTight_invZ10",
+# "selbase_el_gtmet25_phpt80_elpt40_elidTight_phidTight_invZ10",
+# "selbase_el_gtmet25_phpt80_elpt40_elidTight_phidTight_invZ10"]
 sigstr_BCuts = "selbase_el_gtmet25_phpt80_elpt40_elidTight_phidTight_invZ10"
 
 signal_name = ["MadGraphResonanceMass200_width0p01"
@@ -89,7 +92,9 @@ signal_name = ["MadGraphResonanceMass200_width0p01"
     , "MadGraphResonanceMass4000_width5"]
 
 
-# sigstr = ["MadGraphResonanceMass250_width5", "MadGraphResonanceMass1000_width0p01", "MadGraphResonanceMass2200_width0p01"]
+# sigstr = ["MadGraphResonanceMass250_width5",
+# "MadGraphResonanceMass1000_width0p01",
+# "MadGraphResonanceMass2200_width0p01"]
 
 def main():
     '''
@@ -98,7 +103,8 @@ def main():
         2.
     :return:
     '''
-    if options.outputDir: f1 = ROOT.TFile("%s/output.root" % (options.outputDir), "RECREATE")
+    if options.outputDir:
+        f1 = ROOT.TFile("%s/output.root" % (options.outputDir), "RECREATE")
 
     # sampManMuG= SampleManager( options.baseDirMuG, _TREENAME, filename=_FILENAME, xsFile=_XSFILE, lumi=_LUMI )
     sampManElG = SampleManager(options.baseDirElG, _TREENAME, filename=_FILENAME, xsFile=_XSFILE, lumi=_LUMI)
@@ -187,7 +193,7 @@ def main():
     # STEP 3 get the cut strings from tables saved in the above step and plot variables corresponding to those cuts
     drawvars = 1
 
-    if (getyields):
+    if getyields:
         vararray = [("el_pt[0]", (50, 0, 200), "p_{T}(e, leading)")]
 
         makeplots(0, sampManElG, vararray, resultsdir, selarray, hist_config, {}, "")
@@ -196,7 +202,7 @@ def main():
         # hist_config = {"blind":True, "weight": "PUWeight*NLOWeight"}
         # makeplots(vararray, selarray, hist_config, legend_config)
 
-    if (makesob):
+    if makesob:
         vararray = [("el_pt[0]", (50, 0, 200), "p_{T}(e, leading)")]
 
         for j in range(len(signal_name)):  # plot SOB for each signal of interest
@@ -207,10 +213,10 @@ def main():
             # "" )
 
     n = 0
-    if (drawvars):
+    if drawvars:
 
         for j in range(len(signal_name)):
-            if (n == 0):
+            if n == 0:
                 legend_config = {'legendLoc': "Double", "legendTranslateX": 0.3}
             else:
                 legend_config = {'legendLoc': "Double", "legendTranslateX": 0.95}
@@ -226,7 +232,7 @@ def main():
                                 {}, "")
 
     if options.outputDir:
-        ## write and close root file
+        # write and close root file
         f1.Write()
         f1.Close()
 
