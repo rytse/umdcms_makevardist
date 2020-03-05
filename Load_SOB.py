@@ -9,7 +9,7 @@ import subprocess
 # import pandas as pd
 import math
 
-# Import modules from ROOT. 
+# Import modules from ROOT.
 
 import ROOT, os, re, string, csv, math, sys
 from ROOT import TCanvas, TFile, TProfile, TNtuple, TH1F, TH1D, TH2F, TF1, TGaxis, TPad, TPaveLabel, TPaveText, TLegend, \
@@ -42,7 +42,7 @@ debug = 0
 # &&el_pt[0]>40
 # with bad tracker portions excluded
 
-# Set cuts for event processing. 
+# Set cuts for event processing.
 
 selbase_el_excludephi = 'ph_n>=1&&el_n==1&&!( ph_eta[0]<0&&ph_phi[0]>2.3&&ph_phi[0]<2.7)&&!(ph_phi[0]>1.2&&ph_phi[0]<1.5)'
 selbase_mu = 'mu_pt30_n==1&& mu_n==1'
@@ -183,7 +183,7 @@ def makeplots(dostack, samples, vararray, dirname, selprearray=None, hist_config
     if selprearray is None or not isinstance(selprearray, (tuple, list)):
         return
     else:
-        # Make array a single tuple/product. ach 
+        # Make array a single tuple/product. ach
         selarray = product(*selprearray)
 
     if debug:
@@ -215,7 +215,7 @@ def makeplots(dostack, samples, vararray, dirname, selprearray=None, hist_config
             # Draw from the SampleManger "DB" given the chosen cuts
             samples.Draw(var[0], selection, var[1], hist_config, legend_config)
 
-            # Prints out number of events for every signal and background 
+            # Prints out number of events for every signal and background
             # sample (i.e., all combinations of signals and backgrounds). ach
             samples.print_stack_count()
             if dostack:  # plot hist
@@ -295,7 +295,7 @@ def signif(samples, vararray, signal, dirname, selprearray=None, hist_config=Non
     # Total signal.
     total_s = []
 
-    # Total signal error. 
+    # Total signal error.
     total_s_err = []
 
     # total_s_list  = [[] for i in range(len(sigstr))]
@@ -409,6 +409,17 @@ def signif(samples, vararray, signal, dirname, selprearray=None, hist_config=Non
         f.write("cutname total_b total_b_err total_s total_s_err  cut_array_used\n")
         # f.write("xname  total_b total_b_err total_s_list total_s_err_list sigstr sig_cut_for_plots\n")
         # print sigstr[n]
+
+        print "\n\n\n\nDEBUGGING CURRENT CUT\n"
+        print "signal: " + str(signal)
+        print "xname: " + str(xname)
+        print "total_b: " + str(total_b)
+        print "total_b_err: " + str(total_b_err)
+        print "total_s: " + str(total_s)
+        print "total_s_err: " + str(total_s_err)
+        print "sig_cut_for_plots: " + str(sig_cut_for_plots)
+        print "\n\n\n\n"
+
         for j in range(len(xname)):
             # print xname[j]
             # print('%15s ----  %5s ----   %5s --- %5s --- %5s --- %5s' %(str(xname[j]),  str(total_b[j]), str(total_b_err[j]) , str(total_s[j]) , str(total_s_err[j]) , sig_cut_for_plots[j]))
@@ -506,7 +517,7 @@ def makesob_plots(calcsig, sigstr_BCuts, samples, dirname, vararray, signal, sel
     # check the list of lists is correct - update: it is ot a list of lists anymore but leaving for future.
     # row_format = '{:<4}' * len(sig_all)
     # for v in zip(*sig_all):
-    #    #if (debug): 
+    #    #if (debug):
     #   print (row_format.format(*v))
     # print sig_all
 

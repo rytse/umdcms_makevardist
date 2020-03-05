@@ -28,10 +28,10 @@ debug = 0
 RUN_SUBSET = True   # set True to only run on a very small portion of cut space
 
 # STEP 1 -  apply cuts and save final yields for all background and signal samples
-GET_YIELDS = 1
+GET_YIELDS = 0
 # STEP 2  get numbers from above saved log files, make tables and calculate significance. Finally make SOB plots for
 # every signal sample
-MAKE_SOB = 1
+MAKE_SOB = 0
 # STEP 3 get the cut strings from tables saved in the above step and plot variables corresponding to those cuts
 DRAW_VARS = 1
 
@@ -68,13 +68,13 @@ _FILENAME = 'tree.root'
 _LUMI = 36000
 
 # File that loads the (real, LHC data) cross sections
-_XSFILE = 'WG_Analysis/Plotting/cross_sections/photon17.py'
-# _XSFILE   = 'cross_sections/photon17.py'
+#_XSFILE = 'WG_Analysis/Plotting/cross_sections/photon17.py'
+_XSFILE   = 'cross_sections/photon17.py'
 
 # File that loads the simulation data
-_SAMPCONF = 'WG_Analysis/Plotting/Modules/Resonance2017.py'
+#_SAMPCONF = 'WG_Analysis/Plotting/Modules/Resonance2017.py'
 # _BASEPATH = '/home/jkunkle/usercode/Plotting/LimitSetting/'
-# _SAMPCONF = 'Modules/Resonance2017.py'
+_SAMPCONF = 'Modules/Resonance2017.py'
 # _SAMPCONF = 'Modules/Resonance.py'
 
 if options.batch:
@@ -205,7 +205,7 @@ def main():
     if MAKE_SOB:
         vararray = [("el_pt[0]", (50, 0, 200), "p_{T}(e, leading)")]
         for j in range(len(signal_name)):  # plot SOB for each signal of interest
-            makesob_plots(0, sigstr_BCuts, sampManElG, resultsdir, vararray, signal_name[j], selarray, hist_config, {},
+            makesob_plots(1, sigstr_BCuts, sampManElG, resultsdir, vararray, signal_name[j], selarray, hist_config, {},
                           "")
 
     n = 0
