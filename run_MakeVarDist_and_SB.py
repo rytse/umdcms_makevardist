@@ -47,7 +47,6 @@ _SAMPCONF = 'WG_Analysis/Plotting/Modules/Resonance2017.py'
 # _SAMPCONF = 'Modules/Resonance2017.py'
 # _SAMPCONF = 'Modules/Resonance.py'
 
-
 if options.batch:
     ROOT.gROOT.SetBatch(True)
 if options.outputDir is not None:
@@ -96,18 +95,17 @@ signal_name = ["MadGraphResonanceMass200_width0p01"
     , "MadGraphResonanceMass3500_width5"
     , "MadGraphResonanceMass4000_width5"]
 
-
 # sigstr = ["MadGraphResonanceMass250_width5",
 # "MadGraphResonanceMass1000_width0p01",
 # "MadGraphResonanceMass2200_width0p01"]
 
 def main():
-    '''
+    """
     Grab data, apply baseline cuts, and then run the following 3 steps of analysis:
-        1. Sample from each combination of cuts as defined in selarray, saving logs and histograms of the sampled values
-        2.
-    :return:
-    '''
+        1. Sample from each combination of cuts, saving logs and histograms of the sampled values
+        2. Filter cuts by a significance threshold, and save and plot signal and background for each "significant" cut
+        3. Plot the real data for the cuts decided in Step 2
+    """
     if options.outputDir:
         f1 = ROOT.TFile("%s/output.root" % (options.outputDir), "RECREATE")
 
