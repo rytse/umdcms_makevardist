@@ -90,7 +90,7 @@ ROOT.gStyle.SetOptFit(1)
 
 # ROOT.gROOT.SetBatch(True)
 
-# if no option is given, here are the default directories to read
+# if no options given for --baseDirMug & --baseDirElg [not parsed in line 56 or 59], here are the default directories to read -DE 
 # if options.baseDirMuG is None: options.baseDirMuG = "/data2/users/kakw/Resonances2017/LepGamma_mug_2019_09_15/"
 if options.baseDirMuG is None: options.baseDirMuG = "/data2/users/kakw/Resonances2017/LepGamma_mug_2019_10_28/"
 # if options.baseDirElG is None: options.baseDirElG = "/data2/users/kakw/Resonances2017/LepGamma_elg_2019_09_15/"
