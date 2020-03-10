@@ -24,7 +24,7 @@ e) Reset `GET_YIELDS` and `MAKE_SOB` in main to 0 and 1, respectively. This will
 
 import os
 import pwd
-from Load_SOB import *
+from Load_SOB import * #imports all names and packages from Load_SOB -DE
 
 debug = 0
 RUN_SUBSET = True   # set True to only run on a very small portion of cut space
