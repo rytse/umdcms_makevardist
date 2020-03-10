@@ -62,7 +62,7 @@ parser.add_argument('--outputDir', default=None, dest='outputDir', required=Fals
                     help='Output directory to write histograms')
 parser.add_argument('--data', default=False, dest='data', required=False, help='Use data or MC')
 parser.add_argument('--batch', default=None, dest='batch', required=False, help='Supress X11 output') #we use this argument frequently-
-#-to 'supress 11 output'
+#-to 'supress 11 output' -DE
 options = parser.parse_args()
 
 _TREENAME = 'UMDNTuple/EventTree'
@@ -79,7 +79,7 @@ _XSFILE   = 'cross_sections/photon17.py'
 _SAMPCONF = 'Modules/Resonance2017.py'
 # _SAMPCONF = 'Modules/Resonance.py'
 
-if options.batch:
+if options.batch: #dest of --batch option after parsed -DE
     ROOT.gROOT.SetBatch(True)
 if options.outputDir is not None:
     if not os.path.isdir(options.outputDir):
