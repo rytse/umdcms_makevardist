@@ -174,7 +174,7 @@ def main():
     # Uncomment these instead for debugging selbase_el_gtmet25_phpt80_elpt40_elidTight_phidTight_invZ10
     # Reset signal names for debugging purposes. ach
     if RUN_SUBSET:
-        signal_name = ["MadGraphResonanceMass500_width5", "MadGraphResonanceMass1000_width0p01"]
+        signal_name = ["MadGraphResonanceMass500_width5", "MadGraphResonanceMass1000_width0p01"] #the subset of signals we want to run -DE
         cut_met = [(gtmet30,"gtmet30")]
         cut_elpt = [(elpt160,"elpt160")]
         cut_phpt = [(phpt60,"phpt60")]
