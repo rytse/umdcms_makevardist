@@ -8,7 +8,7 @@ Do the following steps when first running the file:
 a) Set `GET_YIELDS` to 1. This will apply the initial cuts and save all relevant background 
    and signal numbers into log files. (note: GET_YIELDS & MAKE_SOB are function arguments for
    the "main()" function in this file [line 134]. When we set these arguments to either 1 or 0, 
-   we are telling python to run the functions [lines 200 & 207] or not, respectively.)
+   we are telling python to run the functions [lines 200 & 207] or not, respectively. -DE)
 
 b) Set `MAKE_SOB` to 0. It is necessary to create the relevant log files to be able to make
    the plots.
