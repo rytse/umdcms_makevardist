@@ -1,0 +1,134 @@
+- input_samples:
+  - SingleMuon
+  - SingleElectron
+  isData: true
+  legend_name: Data
+  name: Data
+  plotColor: ROOT.kBlack
+- input_samples:
+  - WGToLNuG-amcatnloFXFXPhCut
+  - WGToLNuG_PtG-130-amcatnloFXFXPhCut
+  - WGToLNuG_PtG-500-amcatnloFXFXPhCut
+  isActive: true
+  legend_name: W#gamma
+  name: WGamma
+  plotColor: ROOT.kRed-2
+- input_samples:
+  - DiPhoton
+  legend_name: '#gamma#gamma'
+  name: GammaGamma
+  plotColor: ROOT.kYellow
+- input_samples:
+  - DYJetsToLL_M-50-amcatnloFXFXPhOlap
+  legend_name: Z+Jets
+  name: Z+jets
+  plotColor: ROOT.kCyan-5
+- input_samples:
+  - ZGTo2LG
+  legend_name: Z#gamma
+  name: Zgamma
+  plotColor: ROOT.kRed-8
+- input_samples:
+  - DYJetsToLL_M-50
+  isActive: false
+  legend_name: Z+JetsLO
+  name: Z+jetsLO
+  plotColor: ROOT.kCyan-2
+- input_samples:
+  - WGToLNuG-madgraphMLMMTResCut
+  - WGToLNuG_PtG-130-madgraphMLMMTResCut
+  - WGToLNuG_PtG-500-madgraphMLMMTResCut
+  isActive: false
+  legend_name: W#gammaLO
+  name: WGammaLO
+  plotColor: ROOT.kRed-2
+- input_samples:
+  - WJetsToLNu_HT-100To200
+  - WJetsToLNu_HT-200To400
+  - WJetsToLNu_HT-400To600
+  - WJetsToLNu_HT-600To800
+  - WJetsToLNu_HT-800To1200
+  - WJetsToLNu_HT-1200To2500
+  - WJetsToLNu_HT-2500ToInf
+  legend_name: W+Jets
+  name: Wjets
+  plotColor: ROOT.kBlue-2
+- input_samples:
+  - TTGJets
+  legend_name: t#bar{t}#gamma
+  name: TTG
+  plotColor: ROOT.kAzure+1
+- input_samples:
+  - GJets_HT-100To200
+  - GJets_HT-200To400
+  - GJets_HT-400To600
+  - GJets_HT-40To100
+  - GJets_HT-600ToInf
+  legend_name: '#gamma+jets'
+  name: GJets
+  plotColor: ROOT.kOrange
+- input_samples:
+  - TTJets_DiLept
+  isActive: false
+  legend_name: t#bar{t}dileptonic
+  name: TTbar_DiLep
+  plotColor: ROOT.kMagenta+2
+- input_samples:
+  - TTJets_SingleLeptFromTbar
+  - TTJets_SingleLeptFromT
+  isActive: false
+  legend_name: t#bar{t}semileptonic
+  name: TTbar_SingleLep
+  plotColor: ROOT.kGreen+2
+- input_samples:
+  - TTbar_DiLep
+  - TTbar_SingleLep
+  isActive: true
+  legend_name: t#bar{t}
+  name: AllTop
+  plotColor: ROOT.kGreen+3
+- input_samples:
+  - tW_top
+  - tW_antitop
+  isActive: true
+  legend_name: tW
+  name: TopW
+  plotColor: ROOT.kOrange+3
+- input_samples:
+  - TTbar_DiLep
+  - TTbar_SingleLep
+  - TTG
+  - GJets
+  - Wjets
+  isActive: false
+  legend_name: Others
+  name: Others
+  plotColor: ROOT.kGray
+- input_samples:
+  - WGamma
+  - Wjets
+  - TTbar_DiLep
+  - TTbar_SingleLep
+  isActive: false
+  legend_name: MCBackground
+  name: MCBackground
+- input_samples:
+  - WGammaLO
+  - Wjets
+  - TTbar_DiLep
+  - TTbar_SingleLep
+  isActive: false
+  legend_name: MCBackground
+  name: MCBackgroundLO
+- input_samples:
+  - Wjets
+  - TTbar_SingleLep
+  isActive: false
+  legend_name: JetBackground
+  name: JetBackground
+- input_samples:
+  - Z+jets
+  - Zgamma
+  - TTbar_DiLep
+  isActive: false
+  name: EleFakeBackground
